@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c71fc1c-000f-4fe4-8fd3-5d10a11eb9d3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ard-project.iml" afterPath="$PROJECT_DIR$/.idea/ard-project.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -170,12 +169,12 @@
       <updated>1506945807975</updated>
       <workItem from="1506945854974" duration="1197000" />
       <workItem from="1507011517490" duration="202000" />
-      <workItem from="1507015265441" duration="1867000" />
+      <workItem from="1507015265441" duration="2091000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3266000" />
+    <option name="totallyTimeSpent" value="3490000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
