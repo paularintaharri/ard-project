@@ -51,3 +51,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## How To Configure an Existing Laravel Project
+
+1. Navigate to /home/vagrant/Code/Laravel
+2. Install dependencies by running `composer update` from command line
+3. Create development environment by copying the Laravel example env `cp .env.example .env`
+4. Generate the app key by running `php artisan key:generate`
+5. Navigate to homestead.app and see that it works!
