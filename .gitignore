@@ -5,6 +5,5 @@ phpunit.xml
 /Homestead.json
 /after.sh
 /aliases
-/.idea/workspace.xml
-/.idea/tasks.xml
+/.idea
 composer.phar
