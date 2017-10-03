@@ -7,3 +7,4 @@ phpunit.xml
 /aliases
 /.idea/workspace.xml
 /.idea/tasks.xml
+composer.phar
