@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource(
+    'tickets', 'TicketController',
+    [ 'except' => ['create', 'edit'] ]
+);
+
+// Get current user
+Route::get('/me', function (Request $request) {
+    return $request->user();
+})->middleware('auth:api');
