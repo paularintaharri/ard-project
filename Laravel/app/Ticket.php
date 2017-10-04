@@ -23,4 +23,9 @@ class Ticket extends Model
     protected $hidden = [
         'lat', 'lon',
     ];
+
+    public function user(){
+
+        return $this->belongsTo(User::class);
+    }
 }
