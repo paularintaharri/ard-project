@@ -23,3 +23,17 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Ticket::class, function (Faker $faker) {
+
+
+    return [
+        'user_id' => $faker->numberBetween($min = 1, $max = 10),
+        'lat' => $faker->latitude,
+        'lon' => $faker->longitude,
+        'street_address' => $faker->address,
+        'postal_code' => $faker->postcode,
+        'city' => $faker->city,
+        'country' => $faker->country,
+    ];
+});

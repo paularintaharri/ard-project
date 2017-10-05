@@ -15,13 +15,15 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->integer('lat');
             $table->integer('lon');
             $table->string('street_address');
             $table->string('postal_code');
             $table->string('city');
             $table->string('country');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
