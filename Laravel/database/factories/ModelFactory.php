@@ -34,6 +34,6 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
         'street_address' => $faker->address,
         'postal_code' => $faker->postcode,
         'city' => $faker->city,
-        'country' => $faker->country,
+        'country' => 'Suomi',
     ];
 });
