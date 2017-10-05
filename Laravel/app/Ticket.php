@@ -28,4 +28,9 @@ class Ticket extends Model
 
         return $this->belongsTo(User::class);
     }
+
+    public function getDetails(){
+
+        return $this->hasOne(TicketDetail::class);
+    }
 }

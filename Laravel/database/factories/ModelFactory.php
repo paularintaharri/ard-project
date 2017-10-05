@@ -37,3 +37,13 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
         'country' => 'Suomi',
     ];
 });
+
+$factory->define(App\TicketDetail::class, function (Faker $faker) {
+
+
+    return [
+        'ticket_id' => $faker->unique()->numberBetween(1, App\Ticket::count()),
+        'comments' => $faker->sentence,
+        'amount' => $faker->numberBetween($min = 100, $max = 1000),
+    ];
+});
