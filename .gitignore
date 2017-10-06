@@ -7,4 +7,3 @@ phpunit.xml
 /aliases
 /.idea
 /composer.phar
-/Laravel/public
