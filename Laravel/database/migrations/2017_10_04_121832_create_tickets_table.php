@@ -21,6 +21,8 @@ class CreateTicketsTable extends Migration
             $table->string('postal_code');
             $table->string('city');
             $table->string('country');
+            $table->string('comment');
+            $table->integer('amount');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
