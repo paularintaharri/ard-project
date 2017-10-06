@@ -28,17 +28,19 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
 
 
     return [
-        'user_id' => $faker->numberBetween($min = 1, $max = 10),
+        'user_id' => $faker->numberBetween($min = 1, $max = App\User::count()),
         'lat' => $faker->latitude,
         'lon' => $faker->longitude,
         'street_address' => $faker->address,
         'postal_code' => $faker->postcode,
         'city' => $faker->city,
         'country' => 'Suomi',
+        'comment' => $faker->sentence,
+        'amount' => $faker->numberBetween($min = 100, $max = 1000),
     ];
 });
 
-$factory->define(App\TicketDetail::class, function (Faker $faker) {
+/*$factory->define(App\TicketDetail::class, function (Faker $faker) {
 
 
     return [
@@ -46,4 +48,4 @@ $factory->define(App\TicketDetail::class, function (Faker $faker) {
         'comments' => $faker->sentence,
         'amount' => $faker->numberBetween($min = 100, $max = 1000),
     ];
-});
+});*/
