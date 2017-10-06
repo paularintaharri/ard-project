@@ -32,6 +32,13 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
+Vue.component(
+    'user-tickets',
+    require('./components/ticket/UserTicketList.vue')
+);
+
+Vue.component('example', require('./components/Example.vue'));
+
 const app = new Vue({
     el: '#app'
 });
