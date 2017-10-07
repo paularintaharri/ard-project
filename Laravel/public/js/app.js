@@ -44865,7 +44865,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         getTickets: function getTickets() {
             var _this = this;
 
-            axios.get('/tickets').then(function (response) {
+            axios.get('/home/tickets').then(function (response) {
+                console.log(response);
                 _this.tickets = response.data;
             });
         },

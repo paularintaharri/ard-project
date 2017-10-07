@@ -171,7 +171,7 @@
 
                 form: {
                     id: '',
-                }
+                },
             };
         },
 
@@ -206,8 +206,9 @@
              * Get all of the tickets created by the user.
              */
             getTickets() {
-                axios.get('/tickets')
+                axios.get('/home/tickets')
                         .then(response => {
+                            console.log(response);
                             this.tickets = response.data;
                         });
             },
