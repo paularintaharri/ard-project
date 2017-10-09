@@ -144,13 +144,14 @@ class TicketController extends Controller
 
     public function coordinates($id){
         $coords = Ticket::find($id);
-        if(!$id){
+        if(!$coords){
             return new Response([
                 'message' => 'Unable to find coordinates with id ' .$id,
             ], 404);
         }
         else{
-            return $coords->lat + $coords->lon;
+            $coord = $coords->only('lat','lon');
+            return $coord;
         }
 
     }
