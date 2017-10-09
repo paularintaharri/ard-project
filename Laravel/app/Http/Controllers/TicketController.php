@@ -141,4 +141,17 @@ class TicketController extends Controller
             'message' => 'Successfully deleted ticket ' .$id,
             ], 200);
     }
+
+    public function coordinates($id){
+        $coords = Ticket::find($id);
+        if(!$id){
+            return new Response([
+                'message' => 'Unable to find coordinates with id ' .$id,
+            ], 404);
+        }
+        else{
+            return $coords->lat + $coords->lon;
+        }
+
+    }
 }
