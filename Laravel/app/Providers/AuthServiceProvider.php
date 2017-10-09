@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Ticket;
+use App\Policies\TicketPolicy;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -27,5 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Gate::resource('posts', 'PostPolicy');
     }
 }

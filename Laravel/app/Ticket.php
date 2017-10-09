@@ -15,22 +15,8 @@ class Ticket extends Model
         'lat', 'lon', 'street_address', 'postal_code', 'city', 'country',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'lat', 'lon',
-    ];
-
     public function user(){
 
         return $this->belongsTo(User::class);
-    }
-
-    public function getDetails(){
-
-        return $this->hasOne(TicketDetail::class);
     }
 }
