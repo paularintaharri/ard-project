@@ -26,3 +26,5 @@ Route::Resource(
     'tickets', 'TicketController', ['only' => [
     'index', 'show'
 ]])->middleware('auth:api');
+
+Route::get('/tickets/{id}/coordinates', 'TicketController@coordinates');
