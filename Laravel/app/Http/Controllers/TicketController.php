@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
-
 use App\Ticket;
-use Illuminate\Contracts\Session\Session;
+use App\Http\Resources\Ticket as TicketResource;
+use App\Http\Resources\TicketCollection;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class TicketController extends Controller
 {
@@ -18,8 +17,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
-        return View::make('tickets.index')->with('tickets', $tickets);
+        return new TicketCollection(Ticket::all());
     }
 
     /**
@@ -35,7 +33,7 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,18 +46,19 @@ class TicketController extends Controller
         if($validator->fails()){
             return redirect('tickets/create')->withErrors($validator);
         } else {
-        $ticket = new Ticket();
-        $ticket->street_address=$request['street_address'];
-        $ticket->lat=$request['lat'];
-        $ticket->lon=$request['lon'];
-        $ticket->postal_code=$request['postal_code'];
-        $ticket->city=$request['city'];
-        $ticket->country=$request['country'];
-        $ticket->save();
+            $ticket = new Ticket();
+            $ticket->street_address=$request['street_address'];
+            $ticket->lat=$request['lat'];
+            $ticket->lon=$request['lon'];
+            $ticket->postal_code=$request['postal_code'];
+            $ticket->city=$request['city'];
+            $ticket->country=$request['country'];
+            $ticket->save();
 
-        Session::flash('message', 'Successfully created!');
-        return redirect('/');
+            Session::flash('message', 'Successfully created!');
+            return redirect('/');
         }
+
     }
 
     /**
@@ -70,8 +69,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::find($id);
-        return View::make('tickets.show')->with('ticket', $ticket);
+        return new TicketResource(Ticket::findOrFail($id));
     }
 
     /**
@@ -96,7 +94,6 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $validator = $this->validate($request, [
 
         ]);
@@ -115,6 +112,7 @@ class TicketController extends Controller
             Session::flash('message', 'Successfully updated');
             return redirect('/');
         }
+
     }
 
     /**
@@ -125,10 +123,22 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
+        if (!$id) {
+            return new Response('', 400);
+        }
+
         $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            return new Response([
+                'message' => 'Unable to find ticket with id ' .$id,
+            ], 404);
+        }
+
         $ticket->delete();
 
-        Session::flash('message', 'Successfully deleted!');
-        return redirect('/');
+        return new Response([
+            'message' => 'Successfully deleted ticket ' .$id,
+            ], 200);
     }
 }

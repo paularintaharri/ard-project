@@ -44811,6 +44811,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -44822,12 +44847,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             tickets: [],
 
+            message: '',
+
             form: {
-                id: ''
+                amount: '',
+                street_address: '',
+                postal_code: '',
+                city: '',
+                country: 'FI',
+                redirect: '',
+                errors: []
             }
         };
     },
 
+
+    computed: {
+        userTickets: function userTickets() {
+            return this.tickets.filter(function () {
+                return [];
+            });
+        }
+    },
 
     /**
      * Prepare the component (Vue 1.x).
@@ -44851,10 +44892,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          */
         prepareComponent: function prepareComponent() {
             this.getTickets();
-            console.log('no tickets');
 
             $('#modal-create-ticket').on('shown.bs.modal', function () {
-                $('#create-ticket-amount').focus();
+                $('#create-ticket-street_address').focus();
             });
         },
 
@@ -44865,15 +44905,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         getTickets: function getTickets() {
             var _this = this;
 
-            axios.get('/home/tickets').then(function (response) {
+            axios.get('/tickets').then(function (response) {
                 console.log(response);
-                _this.tickets = response.data;
+                _this.tickets = response.data.data.tickets;
             });
         },
 
 
         /**
-         * Show the form for creating new tokens.
+         * Show the form for creating new tickets.
          */
         showCreateTicketForm: function showCreateTicketForm() {
             $('#modal-create-ticket').modal('show');
@@ -44881,7 +44921,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
         /**
-         * Create a new personal access token.
+         * Create a new ticket.
          */
         store: function store() {
             var _this2 = this;
@@ -44890,7 +44930,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             this.form.errors = [];
 
-            axios.post('/ticket/create', this.form).then(function (response) {
+            axios.post('/tickets', this.form).then(function (response) {
                 _this2.form.amount = '';
                 _this2.form.errors = [];
 
@@ -44908,42 +44948,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
         /**
-         * Toggle the given scope in the list of assigned scopes.
-         */
-        /*toggleScope(scope) {
-            if (this.scopeIsAssigned(scope)) {
-                this.form.scopes = _.reject(this.form.scopes, s => s == scope);
-            } else {
-                this.form.scopes.push(scope);
-            }
-        },*/
-
-        /**
-         * Determine if the given scope has been assigned to the token.
-         */
-        /*scopeIsAssigned(scope) {
-            return _.indexOf(this.form.scopes, scope) >= 0;
-        },*/
-
-        /**
-         * Show the given access token to the user.
+         * Show the given ticket to the user.
          */
         showTicket: function showTicket(ticket) {
             $('#modal-create-ticket').modal('hide');
 
-            this.ticket = ticket;
+            this.currentTicket = ticket;
 
             $('#modal-ticket').modal('show');
         },
 
 
         /**
-         * Revoke the given token.
+         * Delete the given ticket.
          */
-        revoke: function revoke(ticket) {
+        deleteTicket: function deleteTicket(ticket) {
             var _this3 = this;
 
-            axios.delete('/ticket/delete/' + ticket.id).then(function (response) {
+            axios.delete('/tickets/' + ticket.id).then(function (response) {
+                _this3.message = response.data.message;
                 _this3.getTickets();
             });
         }
@@ -45003,6 +45026,12 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
+          _vm.message !== ""
+            ? _c("div", { staticClass: "alert alert-success" }, [
+                _c("p", [_vm._v(_vm._s(_vm.message))])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm.tickets.length > 0
             ? _c("table", { staticClass: "table table-borderless m-b-none" }, [
                 _vm._m(0),
@@ -45015,9 +45044,58 @@ var render = function() {
                         "td",
                         { staticStyle: { "vertical-align": "middle" } },
                         [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "action-link text-primary",
+                              on: {
+                                click: function($event) {
+                                  _vm.showTicket(ticket)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(ticket.id) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticStyle: { "vertical-align": "middle" } },
+                        [
                           _vm._v(
                             "\n                                " +
-                              _vm._s(ticket.id) +
+                              _vm._s(ticket.user.name) +
+                              "\n                            "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticStyle: { "vertical-align": "middle" } },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(ticket.created_at.date) +
+                              "\n                            "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticStyle: { "vertical-align": "middle" } },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(ticket.amount) +
                               "\n                            "
                           )
                         ]
@@ -45033,7 +45111,7 @@ var render = function() {
                               staticClass: "action-link text-danger",
                               on: {
                                 click: function($event) {
-                                  _vm.revoke(ticket)
+                                  _vm.deleteTicket(ticket)
                                 }
                               }
                             },
@@ -45102,6 +45180,142 @@ var render = function() {
                 [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { staticClass: "col-md-4 control-label" }, [
+                      _vm._v("Street Address")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.street_address,
+                            expression: "form.street_address"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "create-ticket-street_address",
+                          type: "text",
+                          name: "street_address"
+                        },
+                        domProps: { value: _vm.form.street_address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.form.street_address = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-md-4 control-label" }, [
+                      _vm._v("Postal Code")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.postal_code,
+                            expression: "form.postal_code"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "create-ticket-postal_code",
+                          type: "text",
+                          name: "postal_code"
+                        },
+                        domProps: { value: _vm.form.postal_code },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.form.postal_code = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-md-4 control-label" }, [
+                      _vm._v("City")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.city,
+                            expression: "form.city"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "create-ticket-city",
+                          type: "text",
+                          name: "city"
+                        },
+                        domProps: { value: _vm.form.city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.form.city = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-md-4 control-label" }, [
+                      _vm._v("Country")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.country,
+                            expression: "form.country"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "create-ticket-country",
+                          type: "text",
+                          name: "country"
+                        },
+                        domProps: { value: _vm.form.country },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.form.country = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "col-md-4 control-label" }, [
                       _vm._v("Amount")
                     ]),
                     _vm._v(" "),
@@ -45166,7 +45380,58 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(3)
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { id: "modal-ticket", tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _vm.currentTicket
+            ? _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button ",
+                        "data-dismiss": "modal",
+                        "aria-hidden": "true"
+                      }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(
+                      "\n                        Ticket " +
+                        _vm._s(_vm.currentTicket.id) +
+                        "\n                    "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  _vm._l(_vm.currentTicket, function(value, key) {
+                    return _c("ul", { staticClass: "list-group" }, [
+                      _c("li", { staticClass: "list-group-item" }, [
+                        _c("strong", [_vm._v(_vm._s(key) + ": ")]),
+                        _vm._v(_vm._s(value))
+                      ])
+                    ])
+                  })
+                ),
+                _vm._v(" "),
+                _vm._m(3)
+              ])
+            : _vm._e()
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -45175,7 +45440,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("ID")]), _vm._v(" "), _c("th")])
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Owner")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Added")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("th")
+      ])
     ])
   },
   function() {
@@ -45214,58 +45489,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: { id: "modal-ticket", tabindex: "-1", role: "dialog" }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "close",
-                  attrs: {
-                    type: "button ",
-                    "data-dismiss": "modal",
-                    "aria-hidden": "true"
-                  }
-                },
-                [_vm._v("×")]
-              ),
-              _vm._v(" "),
-              _c("h4", { staticClass: "modal-title" }, [
-                _vm._v("\n                        Ticket\n                    ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("p", [
-                _vm._v(
-                  "\n                        Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                        You may now use this token to make API requests.\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("pre", [_c("code")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v("Close")]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
   }
 ]
 render._withStripped = true

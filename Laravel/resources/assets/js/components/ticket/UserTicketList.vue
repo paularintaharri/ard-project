@@ -30,11 +30,18 @@
                         You have not created any personal access tokens.
                     </p>
 
+                    <div class="alert alert-success" v-if="message !== ''">
+                        <p>{{ message }}</p>
+                    </div>
+
                     <!-- User's tickets -->
                     <table class="table table-borderless m-b-none" v-if="tickets.length > 0">
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Owner</th>
+                                <th>Added</th>
+                                <th>Amount</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,12 +50,23 @@
                             <tr v-for="ticket in tickets">
                                 <!-- Client Name -->
                                 <td style="vertical-align: middle;">
+                                    <a class="action-link text-primary" @click="showTicket(ticket)">
                                     {{ ticket.id }}
+                                    </a>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    {{ ticket.user.name }}
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    {{ ticket.created_at.date }}
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    {{ ticket.amount }}
                                 </td>
 
                                 <!-- Delete Button -->
                                 <td style="vertical-align: middle;">
-                                    <a class="action-link text-danger" @click="revoke(ticket)">
+                                    <a class="action-link text-danger" @click="deleteTicket(ticket)">
                                         Delete
                                     </a>
                                 </td>
@@ -87,31 +105,40 @@
                         <form class="form-horizontal" role="form" @submit.prevent="store">
                             <!-- Amount -->
                             <div class="form-group">
+                                <label class="col-md-4 control-label">Street Address</label>
+
+                                <div class="col-md-6">
+                                    <input id="create-ticket-street_address" type="text" class="form-control" name="street_address" v-model="form.street_address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Postal Code</label>
+
+                                <div class="col-md-6">
+                                    <input id="create-ticket-postal_code" type="text" class="form-control" name="postal_code" v-model="form.postal_code">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">City</label>
+
+                                <div class="col-md-6">
+                                    <input id="create-ticket-city" type="text" class="form-control" name="city" v-model="form.city">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Country</label>
+
+                                <div class="col-md-6">
+                                    <input id="create-ticket-country" type="text" class="form-control" name="country" v-model="form.country">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">Amount</label>
 
                                 <div class="col-md-6">
                                     <input id="create-ticket-amount" type="text" class="form-control" name="amount" v-model="form.amount">
                                 </div>
                             </div>
-
-                            <!-- Scopes -->
-                            <!--<div class="form-group" v-if="scopes.length > 0">
-                                <label class="col-md-4 control-label">Scopes</label>
-
-                                <div class="col-md-6">
-                                    <div v-for="scope in scopes">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"
-                                                    @click="toggleScope(scope.id)"
-                                                    :checked="scopeIsAssigned(scope.id)">
-
-                                                    {{ scope.id }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
                         </form>
                     </div>
 
@@ -127,25 +154,23 @@
             </div>
         </div>
 
-        <!-- Access Token Modal -->
+        <!-- Ticket Modal -->
         <div class="modal fade" id="modal-ticket" tabindex="-1" role="dialog">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" v-if="currentTicket">
                     <div class="modal-header">
                         <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
                         <h4 class="modal-title">
-                            Ticket
+                            Ticket {{ currentTicket.id }}
                         </h4>
                     </div>
 
                     <div class="modal-body">
-                        <p>
-                            Here is your new personal access token. This is the only time it will be shown so don't lose it!
-                            You may now use this token to make API requests.
-                        </p>
+                        <ul class="list-group" v-for="(value, key) in currentTicket">
+                            <li class="list-group-item"><strong>{{ key }}: </strong>{{ value }}</li>
+                        </ul>
 
-                        <pre><code></code></pre>
                     </div>
 
                     <!-- Modal Actions -->
@@ -169,10 +194,26 @@
 
                 tickets: [],
 
+                message: '',
+
                 form: {
-                    id: '',
+                    amount: '',
+                    street_address: '',
+                    postal_code: '',
+                    city: '',
+                    country: 'FI',
+                    redirect: '',
+                    errors: [],
                 },
             };
+        },
+
+        computed: {
+            userTickets: function () {
+                return this.tickets.filter(function () {
+                    return [];
+                })
+            }
         },
 
         /**
@@ -195,10 +236,9 @@
              */
             prepareComponent() {
                 this.getTickets();
-                console.log('no tickets');
 
                 $('#modal-create-ticket').on('shown.bs.modal', () => {
-                    $('#create-ticket-amount').focus();
+                    $('#create-ticket-street_address').focus();
                 });
             },
 
@@ -206,29 +246,29 @@
              * Get all of the tickets created by the user.
              */
             getTickets() {
-                axios.get('/home/tickets')
+                axios.get('/tickets')
                         .then(response => {
                             console.log(response);
-                            this.tickets = response.data;
+                            this.tickets = response.data.data.tickets;
                         });
             },
 
             /**
-             * Show the form for creating new tokens.
+             * Show the form for creating new tickets.
              */
             showCreateTicketForm() {
                 $('#modal-create-ticket').modal('show');
             },
 
             /**
-             * Create a new personal access token.
+             * Create a new ticket.
              */
             store() {
                 this.currentTicket = null;
 
                 this.form.errors = [];
 
-                axios.post('/ticket/create', this.form)
+                axios.post('/tickets', this.form)
                         .then(response => {
                             this.form.amount = '';
                             this.form.errors = [];
@@ -247,40 +287,23 @@
             },
 
             /**
-             * Toggle the given scope in the list of assigned scopes.
-             */
-            /*toggleScope(scope) {
-                if (this.scopeIsAssigned(scope)) {
-                    this.form.scopes = _.reject(this.form.scopes, s => s == scope);
-                } else {
-                    this.form.scopes.push(scope);
-                }
-            },*/
-
-            /**
-             * Determine if the given scope has been assigned to the token.
-             */
-            /*scopeIsAssigned(scope) {
-                return _.indexOf(this.form.scopes, scope) >= 0;
-            },*/
-
-            /**
-             * Show the given access token to the user.
+             * Show the given ticket to the user.
              */
             showTicket(ticket) {
                 $('#modal-create-ticket').modal('hide');
 
-                this.ticket = ticket;
+                this.currentTicket = ticket;
 
                 $('#modal-ticket').modal('show');
             },
 
             /**
-             * Revoke the given token.
+             * Delete the given ticket.
              */
-            revoke(ticket) {
-                axios.delete('/ticket/delete/' + ticket.id)
+            deleteTicket(ticket) {
+                axios.delete('/tickets/' + ticket.id)
                         .then(response => {
+                            this.message = response.data.message;
                             this.getTickets();
                         });
             }
