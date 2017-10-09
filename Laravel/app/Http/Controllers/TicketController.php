@@ -38,27 +38,12 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //$ticket = Ticket::create($request->all());
+        $ticket = new Ticket($request->all());
+        $request->user()->tickets()->save($ticket);
 
-        $validator = $this->validate($request, [
-
-        ]);
-        if($validator->fails()){
-            return redirect('tickets/create')->withErrors($validator);
-        } else {
-            $ticket = new Ticket();
-            $ticket->street_address=$request['street_address'];
-            $ticket->lat=$request['lat'];
-            $ticket->lon=$request['lon'];
-            $ticket->postal_code=$request['postal_code'];
-            $ticket->city=$request['city'];
-            $ticket->country=$request['country'];
-            $ticket->save();
-
-            Session::flash('message', 'Successfully created!');
-            return redirect('/');
-        }
-
+        return new Response([
+            'ticket' => new TicketResource($ticket),
+        ], 200);
     }
 
     /**

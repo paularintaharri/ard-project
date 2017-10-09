@@ -139,6 +139,15 @@
                                     <input id="create-ticket-amount" type="text" class="form-control" name="amount" v-model="form.amount">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Comment</label>
+
+                                <div class="col-md-6">
+                                    <textarea id="create-ticket-comment" type="text" class="form-control" name="comment" v-model="form.comment"></textarea>
+                                </div>
+                            </div>
+                            <input id="create-ticket-lat" type="hidden" class="form-control" name="lat" v-model="form.lat">
+                            <input id="create-ticket-lon" type="hidden" class="form-control" name="lon" v-model="form.lon">
                         </form>
                     </div>
 
@@ -146,7 +155,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                        <button type="button" class="btn btn-primary" @click="store">
+                        <button type="button" class="btn btn-primary" @click="create">
                             Create
                         </button>
                     </div>
@@ -196,12 +205,17 @@
 
                 message: '',
 
+                address: '',
+
                 form: {
+                    comment: '',
                     amount: '',
                     street_address: '',
                     postal_code: '',
                     city: '',
                     country: 'FI',
+                    lat: 0,
+                    lon: 0,
                     redirect: '',
                     errors: [],
                 },
@@ -275,7 +289,7 @@
 
                             this.tickets.push(response.data.ticket);
 
-                            this.showTicket(response.data.currentTicket);
+                            this.showTicket(response.data.ticket);
                         })
                         .catch(error => {
                             if (typeof error.response.data === 'object') {
@@ -284,6 +298,30 @@
                                 this.form.errors = ['Something went wrong. Please try again.'];
                             }
                         });
+            },
+
+            buildAddress() {
+                return (this.form.street_address + ', '
+                    + this.form.postal_code + ', '
+                    + this.form.city + ', '
+                    + this.form.country);
+            },
+
+            create() {
+                var self = this;
+                this.address = this.buildAddress();
+                googleMapsClient.geocode({
+                    address: this.address
+                }, function(err, response) {
+                    if (!err) {
+                        console.log(response);
+                        self.form.lat = response.json.results[0].geometry.location.lat;
+                        self.form.lon = response.json.results[0].geometry.location.lng;
+                        self.store();
+                    } else {
+                        this.form.errors = [err];
+                    }
+                });
             },
 
             /**
