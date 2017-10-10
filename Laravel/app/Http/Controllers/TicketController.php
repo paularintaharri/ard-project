@@ -135,25 +135,36 @@ class TicketController extends Controller
             ], 404);
         }
         else{
-<<<<<<< HEAD
-            return $coords->toJson();
-=======
             $coord = $coords->only('lat','lon');
             return $coord;
->>>>>>> f3069846ab58ecda341cf574076ef5682bfa68f1
         }
     }
 
-    public function ticketsbycity($city){
-        $citys = Ticket::find($city);
-        if(!$city){
+    public function ticketsByCity($city){
+        $cities = Ticket::where('city', $city)->get();
+
+        if($cities->count() === 0){
             return new Response([
-                'message' => 'Unable to find tickets by the city' .$city,
+                'message' => 'Unable to find tickets by the city ' .$city,
             ], 404);
         }
         else{
-            return $citys->toJson();
+            return $cities;
         }
-}
+    }
+
+    public function ticketsByCoord($lat, $lon){
+        $ticketsCoord = Ticket::where('lat', $lat)->where('lon', $lon)->get();
+
+        if($ticketsCoord->count() === 0) {
+            return new Response([
+                'message' => 'Unable to find tickets by the coordinates.',
+            ], 404);
+        }
+        else{
+            return $ticketsCoord;
+        }
+    }
+
 
 }

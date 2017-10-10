@@ -27,12 +27,11 @@ Route::Resource(
     'index', 'show'
 ]])->middleware('auth:api');
 
-<<<<<<< HEAD
-//Get lon and lat coordinates
+//Get lon and lat coordinates by id
 Route::get('/tickets/{id}/coordinates', 'TicketController@coordinates');
 
 //Get tickets by the city
-Route::get('/tickets/ticketsbycity/{city}', 'TicketController@ticketsbycity');
-=======
-Route::get('/tickets/{id}/coordinates', 'TicketController@coordinates');
->>>>>>> f3069846ab58ecda341cf574076ef5682bfa68f1
+Route::get('/tickets/city/{city}', 'TicketController@ticketsByCity');
+
+//Get tickets by the coordinates
+Route::get('/tickets/coord/lat={lat}lon={lon}', 'TicketController@ticketsByCoord');
