@@ -14,8 +14,8 @@ class ChangeLatLonColumnFloat extends Migration
     public function up()
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->float('lat', 3, 6)->change();
-            $table->float('lon', 3, 6)->change();
+            $table->float('lat', 3, 8)->change();
+            $table->float('lon', 3, 8)->change();
             //
         });
     }
