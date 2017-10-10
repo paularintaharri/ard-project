@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketCollection;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,5 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function userTickets(Request $request){
+        return new TicketCollection(Ticket::where('user_id', '=', $request->user()->id)->get());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTicket;
 use App\Ticket;
 use App\Http\Resources\Ticket as TicketResource;
 use App\Http\Resources\TicketCollection;
@@ -33,10 +34,10 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreTicket  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicket $request)
     {
         $ticket = new Ticket($request->all());
         $request->user()->tickets()->save($ticket);

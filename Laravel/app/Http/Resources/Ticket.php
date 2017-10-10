@@ -25,6 +25,7 @@ class Ticket extends Resource
             'country' => $this->country,
             'user' => $this->user,
             'amount' => $this->amount,
+            'comment' => $this->comment,
             'created_at' => $this->created_at,
         ];
     }

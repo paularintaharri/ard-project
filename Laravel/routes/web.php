@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::Resource('tickets', 'TicketController')->middleware('auth');
+
+Route::get('/home/mytickets', 'HomeController@userTickets');

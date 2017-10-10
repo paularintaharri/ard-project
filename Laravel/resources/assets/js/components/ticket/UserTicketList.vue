@@ -27,7 +27,7 @@
                 <div class="panel-body">
                     <!-- No Tickets Notice -->
                     <p class="m-b-none" v-if="tickets.length === 0">
-                        You have not created any personal access tokens.
+                        You have not created any tickets.
                     </p>
 
                     <div class="alert alert-success" v-if="message !== ''">
@@ -39,7 +39,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Owner</th>
                                 <th>Added</th>
                                 <th>Amount</th>
                                 <th></th>
@@ -53,9 +52,6 @@
                                     <a class="action-link text-primary" @click="showTicket(ticket)">
                                     {{ ticket.id }}
                                     </a>
-                                </td>
-                                <td style="vertical-align: middle;">
-                                    {{ ticket.user.name }}
                                 </td>
                                 <td style="vertical-align: middle;">
                                     {{ ticket.created_at.date }}
@@ -260,7 +256,7 @@
              * Get all of the tickets created by the user.
              */
             getTickets() {
-                axios.get('/tickets')
+                axios.get('/home/mytickets')
                         .then(response => {
                             console.log(response);
                             this.tickets = response.data.data.tickets;
@@ -301,10 +297,17 @@
             },
 
             buildAddress() {
+                var streetArray = this.form.street_address.split(/(\d+)/).filter(Boolean);
+
+                if (streetArray.length > 1) {
+                    if (typeof streetArray[1] == 'number') {
+                        this.form.street_address = streetArray[1] + ' ' + streetArray[0];
+                    }
+                };
                 return (this.form.street_address + ', '
                     + this.form.postal_code + ', '
                     + this.form.city + ', '
-                    + this.form.country);
+                    + this.form.country).replace(/(<([^>]+)>)/ig,"");
             },
 
             create() {
