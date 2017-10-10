@@ -39,7 +39,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Owner</th>
                                 <th>Added</th>
                                 <th>Amount</th>
                                 <th></th>
@@ -53,9 +52,6 @@
                                     <a class="action-link text-primary" @click="showTicket(ticket)">
                                     {{ ticket.id }}
                                     </a>
-                                </td>
-                                <td style="vertical-align: middle;">
-                                    {{ ticket.user.name }}
                                 </td>
                                 <td style="vertical-align: middle;">
                                     {{ ticket.created_at.date }}
@@ -301,10 +297,17 @@
             },
 
             buildAddress() {
+                var streetArray = this.form.street_address.split(/(\d+)/).filter(Boolean);
+
+                if (streetArray.length > 1) {
+                    if (typeof streetArray[1] == 'number') {
+                        this.form.street_address = streetArray[1] + ' ' + streetArray[0];
+                    }
+                };
                 return (this.form.street_address + ', '
                     + this.form.postal_code + ', '
                     + this.form.city + ', '
-                    + this.form.country);
+                    + this.form.country).replace(/(<([^>]+)>)/ig,"");
             },
 
             create() {

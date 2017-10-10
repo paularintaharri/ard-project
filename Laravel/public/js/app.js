@@ -72282,10 +72282,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -72401,7 +72397,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             });
         },
         buildAddress: function buildAddress() {
-            return this.form.street_address + ', ' + this.form.postal_code + ', ' + this.form.city + ', ' + this.form.country;
+            var streetArray = this.form.street_address.split(/(\d+)/).filter(Boolean);
+
+            if (streetArray.length > 1) {
+                if (typeof streetArray[1] == 'number') {
+                    this.form.street_address = streetArray[1] + ' ' + streetArray[0];
+                }
+            };
+            return (this.form.street_address + ', ' + this.form.postal_code + ', ' + this.form.city + ', ' + this.form.country).replace(/(<([^>]+)>)/ig, "");
         },
         create: function create() {
             var self = this;
@@ -72535,18 +72538,6 @@ var render = function() {
                                   "\n                                "
                               )
                             ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticStyle: { "vertical-align": "middle" } },
-                        [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(ticket.user.name) +
-                              "\n                            "
                           )
                         ]
                       ),
@@ -73003,8 +72994,6 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Owner")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Added")]),
         _vm._v(" "),
         _c("th", [_vm._v("Amount")]),
@@ -73074,7 +73063,7 @@ if (false) {
 /* 255 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory\n    at Error (native)\n    at Object.Module._extensions..node (module.js:597:18)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at module.exports (/home/vagrant/Code/Laravel/node_modules/node-sass/lib/binding.js:19:10)\n    at Object.<anonymous> (/home/vagrant/Code/Laravel/node_modules/node-sass/lib/index.js:14:35)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at Object.<anonymous> (/home/vagrant/Code/Laravel/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:170:18\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:27:11)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/home/vagrant/Code/Laravel/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/home/vagrant/Code/Laravel/node_modules/webpack/lib/Compilation.js:149:10)\n    at moduleFactory.create (/home/vagrant/Code/Laravel/node_modules/webpack/lib/Compilation.js:447:10)\n    at factory (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModuleFactory.js:241:5)\n    at applyPluginsAsyncWaterfall (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModuleFactory.js:94:13)\n    at /home/vagrant/Code/Laravel/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (/home/vagrant/Code/Laravel/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/home/vagrant/Code/Laravel/node_modules/tapable/lib/Tapable.js:272:13)\n    at resolver (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModuleFactory.js:69:10)\n    at process.nextTick (/home/vagrant/Code/Laravel/node_modules/webpack/lib/NormalModuleFactory.js:194:7)\n    at _combinedTickCallback (internal/process/next_tick.js:73:7)\n    at process._tickCallback (internal/process/next_tick.js:104:9)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
