@@ -72404,7 +72404,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     this.form.street_address = streetArray[1] + ' ' + streetArray[0];
                 }
             };
-            return (this.form.street_address + ', ' + this.form.postal_code + ', ' + this.form.city + ', ' + this.form.country).replace(/(<([^>]+)>)/ig, "");
+            return (this.form.street_address + ', ' + this.form.city + ', ' + this.form.country).replace(/(<([^>]+)>)/ig, "");
         },
         create: function create() {
             var self = this;

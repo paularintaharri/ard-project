@@ -305,7 +305,6 @@
                     }
                 };
                 return (this.form.street_address + ', '
-                    + this.form.postal_code + ', '
                     + this.form.city + ', '
                     + this.form.country).replace(/(<([^>]+)>)/ig,"");
             },
