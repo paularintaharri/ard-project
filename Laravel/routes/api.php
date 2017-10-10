@@ -35,3 +35,5 @@ Route::get('/tickets/city/{city}', 'TicketController@ticketsByCity');
 
 //Get tickets by the coordinates
 Route::get('/tickets/coord/lat={lat}lon={lon}', 'TicketController@ticketsByCoord');
+
+Route::get('/tickets/user/{id}', 'TicketController@ticketsByUser');

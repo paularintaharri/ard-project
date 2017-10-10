@@ -167,5 +167,17 @@ class TicketController extends Controller
         }
     }
 
+    public function ticketsByUser($id){
+        $user = Ticket::where('user_id', $id)->get();
+        if(!$user){
+            return new Response([
+                'message' => 'Unable to find coordinates with id ' .$user,
+            ], 404);
+        }
+        else{
+            return $user;
+        }
+    }
+
 
 }
