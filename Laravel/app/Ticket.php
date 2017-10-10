@@ -12,7 +12,7 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
-        'lat', 'lon', 'street_address', 'postal_code', 'city', 'country',
+        'lat', 'lon', 'street_address', 'postal_code', 'city', 'country', 'amount', 'comment'
     ];
 
     public function user(){
