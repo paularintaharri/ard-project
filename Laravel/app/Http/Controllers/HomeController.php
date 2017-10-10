@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketCollection;
 use App\Ticket;
 use Illuminate\Http\Request;
 
@@ -25,5 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function userTickets(){
+        return new TicketCollection($this->user->tickets());
     }
 }
