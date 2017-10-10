@@ -51,3 +51,7 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+window.googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyClJ-IzkYY8d6b9tOAw-uFxtIA7bX_u4MQ'
+});

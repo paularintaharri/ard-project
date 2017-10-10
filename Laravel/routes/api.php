@@ -16,3 +16,24 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Get current user
+Route::get('/me', function (Request $request) {
+    return $request->user();
+})->middleware('auth:api');
+
+Route::Resource(
+    'tickets', 'TicketController', ['only' => [
+    'index', 'show'
+]])->middleware('auth:api');
+
+//Get lon and lat coordinates by id
+Route::get('/tickets/coordinates/{id}', 'TicketController@coordinates');
+
+//Get tickets by the city
+Route::get('/tickets/city/{city}', 'TicketController@ticketsByCity');
+
+//Get tickets by the coordinates
+Route::get('/tickets/coord/lat={lat}lon={lon}', 'TicketController@ticketsByCoord');
+
+Route::get('/tickets/user/{id}', 'TicketController@ticketsByUser');

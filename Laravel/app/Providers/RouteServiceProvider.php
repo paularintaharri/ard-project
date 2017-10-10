@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\User;
+use App\Ticket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
