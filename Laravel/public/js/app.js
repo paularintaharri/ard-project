@@ -72356,7 +72356,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         getTickets: function getTickets() {
             var _this = this;
 
-            axios.get('/tickets').then(function (response) {
+            axios.get('/home/mytickets').then(function (response) {
                 console.log(response);
                 _this.tickets = response.data.data.tickets;
             });
@@ -72498,7 +72498,7 @@ var render = function() {
           _vm.tickets.length === 0
             ? _c("p", { staticClass: "m-b-none" }, [
                 _vm._v(
-                  "\n                    You have not created any personal access tokens.\n                "
+                  "\n                    You have not created any tickets.\n                "
                 )
               ])
             : _vm._e(),

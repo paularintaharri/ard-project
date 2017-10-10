@@ -27,7 +27,7 @@
                 <div class="panel-body">
                     <!-- No Tickets Notice -->
                     <p class="m-b-none" v-if="tickets.length === 0">
-                        You have not created any personal access tokens.
+                        You have not created any tickets.
                     </p>
 
                     <div class="alert alert-success" v-if="message !== ''">
@@ -256,7 +256,7 @@
              * Get all of the tickets created by the user.
              */
             getTickets() {
-                axios.get('/tickets')
+                axios.get('/home/mytickets')
                         .then(response => {
                             console.log(response);
                             this.tickets = response.data.data.tickets;
