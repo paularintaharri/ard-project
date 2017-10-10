@@ -26,3 +26,9 @@ Route::Resource(
     'tickets', 'TicketController', ['only' => [
     'index', 'show'
 ]])->middleware('auth:api');
+
+//Get lon and lat coordinates
+Route::get('/tickets/{id}/coordinates', 'TicketController@coordinates');
+
+//Get tickets by the city
+Route::get('/tickets/ticketsbycity/{city}', 'TicketController@ticketsbycity');

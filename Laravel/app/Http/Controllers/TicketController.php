@@ -150,8 +150,20 @@ class TicketController extends Controller
             ], 404);
         }
         else{
-            return $coords->lat + $coords->lon;
+            return $coords->toJson();
         }
-
     }
+
+    public function ticketsbycity($city){
+        $citys = Ticket::find($city);
+        if(!$city){
+            return new Response([
+                'message' => 'Unable to find tickets by the city' .$city,
+            ], 404);
+        }
+        else{
+            return $citys->toJson();
+        }
+}
+
 }
