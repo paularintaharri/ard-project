@@ -29,42 +29,44 @@ Official documentation [is located here](https://laravel.com/docs/homestead).
 10. Generate the app key by running `php artisan key:generate`
 11. Navigate to homestead.app and see that it works!
 
-##API Documentation
-###Getting started with API
+## API Documentation
+### Getting started with API
 Login to service and request for Oauth-client and you will receive client secret key.
 With that key you can make API calls with Postman. Example on how to add Oauth to Postman below
 Client-authentication:
 
-Authorization-URL: homestead.app/oauth/authorize
-Token-URL: homestead.app/oauth/token
-Callback-URL: "your.application.callback.url"
-ClientID: "your-application-client-id"
-ClientSecret: "your-application-client-secret"
-Scopes: Not used
-GrantType: Authorization Code
+- Authorization-URL: homestead.app/oauth/authorize
+- Token-URL: homestead.app/oauth/token
+- Callback-URL: "your.application.callback.url"
+- ClientID: "your-application-client-id"
+- ClientSecret: "your-application-client-secret"
+- Scopes: Not used
+- GrantType: Authorization Code
 
 To use API in your application you need to add code below to your source code.
+
 Making API calls
+
 Call header needs
 
-Accept: application/json
-Authorization: Bearer "Personal-Access-Token"
+- Accept: application/json
+- Authorization: Bearer "Personal-Access-Token"
 
-###Example API calls
+### Example API calls
 Get all the tickets:
-homestead.app/api/tickets
+- homestead.app/api/tickets
 
 Get ticket with ticket id example:
-homestead.app/api/tickets/3
+- homestead.app/api/tickets/3
 
 Get tickets coordinates with ticket id example:
-homestead.app/api/tickets/coordinates/3
+- homestead.app/api/tickets/coordinates/3
 
 Get all the tickets by city name example:
-homestead.app/api/tickets/city/Helsinki
+- homestead.app/api/tickets/city/Helsinki
 
 Get all the tickets by latitude and longitude example:
-homestead.app/api/tickets/coord/lat=32lon=78
+- homestead.app/api/tickets/coord/lat=32lon=78
 
 Get all the tickets by user id example:
-homestead.app/api/tickets/user/11
+- homestead.app/api/tickets/user/11
