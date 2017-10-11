@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">API Documentation</a>
+                    <a href="http://homestead.app/documentation/api">API Documentation</a>
                     <a href="https://gitlab.com/timorl/ard-project">Repository</a>
                 </div>
             </div>
