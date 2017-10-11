@@ -64,19 +64,19 @@ GET all the tickets:
 - homestead.app/api/tickets
 
 GET ticket with ticket id example:
-- homestead.app/api/tickets/3
+- homestead.app/api/tickets/{id}
 
 GET tickets coordinates with ticket id example:
-- homestead.app/api/tickets/coordinates/3
+- homestead.app/api/tickets/coordinates/{id}
 
 GET all the tickets by city name example:
-- homestead.app/api/tickets/city/Helsinki
+- homestead.app/api/tickets/city/{city}
 
 GET all the tickets by latitude and longitude example:
-- homestead.app/api/tickets/coord/lat=32lon=78
+- homestead.app/api/tickets/coord/lat={lat}lon={lon}
 
 GET all the tickets by user id example:
-- homestead.app/api/tickets/user/11
+- homestead.app/api/tickets/user/{id}
 
 ### User API
 
