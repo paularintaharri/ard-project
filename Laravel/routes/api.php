@@ -27,6 +27,10 @@ Route::Resource(
     'index', 'show'
 ]])->middleware('auth:api');
 
+Route::apiResource('user/tickets', 'UserTicketController')->middleware('auth:api');
+
+Route::apiResource('user', 'UserController')->middleware('auth:api');
+
 //Get lon and lat coordinates by id
 Route::get('/tickets/coordinates/{id}', 'TicketController@coordinates');
 

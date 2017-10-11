@@ -72356,7 +72356,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         getTickets: function getTickets() {
             var _this = this;
 
-            axios.get('/home/mytickets').then(function (response) {
+            axios.get('/user/tickets').then(function (response) {
                 console.log(response);
                 _this.tickets = response.data.data.tickets;
             });
@@ -72381,7 +72381,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             this.form.errors = [];
 
-            axios.post('/tickets', this.form).then(function (response) {
+            axios.post('/user/tickets', this.form).then(function (response) {
                 _this2.form.amount = '';
                 _this2.form.errors = [];
 
@@ -72442,7 +72442,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         deleteTicket: function deleteTicket(ticket) {
             var _this3 = this;
 
-            axios.delete('/tickets/' + ticket.id).then(function (response) {
+            axios.delete('/user/tickets/' + ticket.id).then(function (response) {
                 _this3.message = response.data.message;
                 _this3.getTickets();
             });

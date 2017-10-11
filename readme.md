@@ -28,3 +28,73 @@ Official documentation [is located here](https://laravel.com/docs/homestead).
 9. Create development environment by copying the Laravel example env `cp .env.example .env`
 10. Generate the app key by running `php artisan key:generate`
 11. Navigate to homestead.app and see that it works!
+
+## API Documentation
+The Speeding Ticket API uses Oauth2 for client and user authentication.
+There are three API endpoints through which you can query for speeding tickets, manage your own account,
+create or delete tickets and authorize your Oauth clients
+### Getting started with API
+Login or register to homestead.app.
+From the user dashboard you can manage your Oauth clients and create personal access tokens.
+You can authorize your client and request for Oauth-client tokens through our Oauth API endpoint.
+You can test both authorization methods by making API calls with Postman.
+### Example on how to use Oauth2 authorization with Postman:
+
+Client-authentication:
+
+- Authorization-URL: homestead.app/oauth/authorize
+- Token-URL: homestead.app/oauth/token
+- Callback-URL: "your.application.callback.url"
+- ClientID: "your-application-client-id"
+- ClientSecret: "your-application-client-secret"
+- Scopes: Not used
+- GrantType: Authorization Code
+
+To use API in your application you need to add code below to your source code.
+
+Making API calls
+
+Call header needs
+
+- Accept: application/json
+- Authorization: Bearer "Personal-Access-Token"
+
+### Example API calls
+GET all the tickets:
+- homestead.app/api/tickets
+
+GET ticket with ticket id example:
+- homestead.app/api/tickets/{id}
+
+GET tickets coordinates with ticket id example:
+- homestead.app/api/tickets/coordinates/{id}
+
+GET all the tickets by city name example:
+- homestead.app/api/tickets/city/{city}
+
+GET all the tickets by latitude and longitude example:
+- homestead.app/api/tickets/coord/lat={lat}lon={lon}
+
+GET all the tickets by user id example:
+- homestead.app/api/tickets/user/{id}
+
+### User API
+
+The API supports retrieving authenticated user's resources.
+The base URL for user's resources is: `homestead.app/api/user`
+To be able to make any calls to the User API, you first need to create a Personal Access Token.
+
+GET API user's details, UPDATE user information or DELETE account:
+- homestead.app/api/user
+
+GET API user managed tickets:
+- homestead.app/api/user/tickets
+
+GET ticket by ID:
+- homestead.app/api/user/tickets/{id}
+
+POST new ticket:
+- homestead.app/api/user/tickets
+
+DELETE ticket by ID:
+- homestead.app/api/user/tickets/{id}

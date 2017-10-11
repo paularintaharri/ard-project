@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Ticket;
-use App\Policies\TicketPolicy;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

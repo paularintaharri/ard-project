@@ -15,10 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/documentation/api', function () {
+    return view('api_doc');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::Resource('tickets', 'TicketController')->middleware('auth');
+Route::Resource('/user/tickets', 'UserTicketController')->middleware('auth');
 
-Route::get('/home/mytickets', 'HomeController@userTickets');
+Route::Resource('/user', 'UserController')->middleware('auth');
+
+//Route::get('/home/mytickets', 'HomeController@userTickets');

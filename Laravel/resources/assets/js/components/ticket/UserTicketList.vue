@@ -256,7 +256,7 @@
              * Get all of the tickets created by the user.
              */
             getTickets() {
-                axios.get('/home/mytickets')
+                axios.get('/user/tickets')
                         .then(response => {
                             console.log(response);
                             this.tickets = response.data.data.tickets;
@@ -278,7 +278,7 @@
 
                 this.form.errors = [];
 
-                axios.post('/tickets', this.form)
+                axios.post('/user/tickets', this.form)
                         .then(response => {
                             this.form.amount = '';
                             this.form.errors = [];
@@ -341,7 +341,7 @@
              * Delete the given ticket.
              */
             deleteTicket(ticket) {
-                axios.delete('/tickets/' + ticket.id)
+                axios.delete('/user/tickets/' + ticket.id)
                         .then(response => {
                             this.message = response.data.message;
                             this.getTickets();
