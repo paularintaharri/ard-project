@@ -30,9 +30,16 @@ Official documentation [is located here](https://laravel.com/docs/homestead).
 11. Navigate to homestead.app and see that it works!
 
 ## API Documentation
+The Speeding Ticket API uses Oauth2 for client and user authentication.
+There are three API endpoints through which you can query for speeding tickets, manage your own account,
+create or delete tickets and authorize your Oauth clients
 ### Getting started with API
-Login to service and request for Oauth-client and you will receive client secret key.
-With that key you can make API calls with Postman. Example on how to add Oauth to Postman below
+Login or register to homestead.app.
+From the user dashboard you can manage your Oauth clients and create personal access tokens.
+You can authorize your client and request for Oauth-client tokens through our Oauth API endpoint.
+You can test both authorization methods by making API calls with Postman.
+### Example on how to use Oauth2 authorization with Postman:
+
 Client-authentication:
 
 - Authorization-URL: homestead.app/oauth/authorize
@@ -70,3 +77,24 @@ GET all the tickets by latitude and longitude example:
 
 GET all the tickets by user id example:
 - homestead.app/api/tickets/user/11
+
+### User API
+
+The API supports retrieving authenticated user's resources.
+The base URL for user's resources is: `homestead.app/api/user`
+To be able to make any calls to the User API, you first need to create a Personal Access Token.
+
+GET API user's details, UPDATE user information or DELETE account:
+- homestead.app/api/user
+
+GET API user managed tickets:
+- homestead.app/api/user/tickets
+
+GET ticket by ID:
+- homestead.app/api/user/tickets/{id}
+
+POST new ticket:
+- homestead.app/api/user/tickets
+
+DELETE ticket by ID:
+- homestead.app/api/user/tickets/{id}
