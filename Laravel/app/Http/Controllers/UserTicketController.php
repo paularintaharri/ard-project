@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Resources\TicketCollection;
 use App\Http\Resources\Ticket as TicketResource;
 use App\Ticket;
+use App\Http\Requests\StoreTicket;
 use Illuminate\Support\Facades\Auth;
 
 class UserTicketController extends Controller
@@ -38,7 +39,7 @@ class UserTicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicket $request)
     {
         $ticket = new Ticket($request->all());
         $request->user()->tickets()->save($ticket);
