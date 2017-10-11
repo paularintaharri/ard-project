@@ -6,9 +6,16 @@
             <div class="col-md-8 col-md-offset-2">
                 <h1>Speeding Ticket API</h1>
                 <h2>API Documentation</h2>
+                <p>The Speeding Ticket API uses Oauth2 for client and user authentication.
+                    There are three API endpoints through which you can query for speeding
+                    tickets, manage your own account, create or delete tickets and authorize
+                    your Oauth clients</p>
                 <h3>Getting started with API</h3>
-                <p>Login to service and request for Oauth-client and you will receive client secret key.
-                    With that key you can make API calls with Postman. Example on how to add Oauth to Postman below</p>
+                <p>Login or register to homestead.app.
+                    From the user dashboard you can manage your Oauth clients and create personal access tokens.
+                    You can authorize your client and request for Oauth-client tokens through our Oauth API endpoint.
+                    You can test both authorization methods by making API calls with Postman.</p>
+                <h3>Example on how to use Oauth2 authorization with Postman:</h3>
                 <p>Client-authentication:<br>
                     Authorization-URL: homestead.app/oauth/authorize<br>
                     Token-URL: homestead.app/oauth/token<br>
@@ -24,18 +31,33 @@
                 <code>Accept: application/json</code><br>
                 <code>Authorization: Bearer "Personal-Access-Token"</code>
                 <h3>Example API calls</h3>
-                <p>Get all the tickets:<br>
+                <p>GET all the tickets:<br>
                     homestead.app/api/tickets<br><br>
-                    Get ticket with ticket id example:<br>
+                    GET ticket with ticket id example:<br>
                     homestead.app/api/tickets/3<br><br>
-                    Get tickets coordinates with ticket id example:<br>
+                    GET tickets coordinates with ticket id example:<br>
                     homestead.app/api/tickets/coordinates/3<br><br>
-                    Get all the tickets by city name example:<br>
+                    GET all the tickets by city name example:<br>
                     homestead.app/api/tickets/city/Helsinki<br><br>
-                    Get all the tickets by latitude and longitude example:<br>
+                    GET all the tickets by latitude and longitude example:<br>
                     homestead.app/api/tickets/coord/lat=32lon=78<br><br>
-                    Get all the tickets by user id example:<br>
+                    GET all the tickets by user id example:<br>
                     homestead.app/api/tickets/user/11
+                </p>
+                <h3>User API</h3>
+                <p>The API supports retrieving authenticated user's resources.<br>
+                The base URL for user's resources is: <code>homestead.app/api/user</code><br>
+                To be able to make any calls to the User API, you first need to create a Personal Access Token.</p>
+                <p>GET API user's details, UPDATE user information or DELETE account:<br>
+                    homestead.app/api/user<br><br>
+                    GET API user managed tickets:<br>
+                    homestead.app/api/user/tickets<br><br>
+                    GET ticket by ID:<br>
+                    homestead.app/api/user/tickets/{id}<br><br>
+                    POST new ticket:<br>
+                    homestead.app/api/user/tickets<br><br>
+                    DELETE ticket by ID:<br>
+                    homestead.app/api/user/tickets/{id}<br><br>
                 </p>
 
             </div>
