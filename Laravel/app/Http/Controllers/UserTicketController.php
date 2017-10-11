@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\TicketCollection;
+use App\Http\Resources\Ticket as TicketResource;
+use App\Ticket;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UserTicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return new Response([
-            'user' => new UserResource(Auth::user()),
-        ], 200);
+        $id = Auth::id();
+        return new TicketCollection(Ticket::where('user_id', "=", $id)->get());
     }
 
     /**
@@ -40,7 +40,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticket = new Ticket($request->all());
+        $request->user()->tickets()->save($ticket);
+
+        return new Response([
+            'ticket' => new TicketResource($ticket),
+        ], 200);
     }
 
     /**
@@ -51,7 +56,18 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = Auth::id();
+        $ticket = Ticket::findOrFail($id);
+
+        if (!($id === $ticket->user_id)) {
+
+            return new Response([
+                'message' => 'Must be the owner of the ticket ' .$id,
+            ], 401);
+
+        }
+
+        return new TicketResource($ticket);
     }
 
     /**
@@ -72,49 +88,45 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $auth_user = Auth::user();
-        $user = User::findOrFail($auth_user->id);
-
-        if (!$user) {
-            return new Response([
-                'message' => 'Unable to find user with id ' .$auth_user->id,
-            ], 404);
-        }
-
-        $user = User::where('id', $auth_user->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
-        return new Response([
-            'user' => new UserResource($user),
-            'message' => 'Successfully updated user ' .$user->id,
-        ], 200);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
-        $auth_user = Auth::user();
-        $user = User::findOrFail($auth_user->id);
+        $user_id = Auth::id();
 
-        if (!$user) {
+        if (!$id) {
+            return new Response('', 400);
+        }
+
+        $ticket = Ticket::find($id);
+
+        if (!$ticket) {
             return new Response([
-                'message' => 'Unable to find user with id ' .$auth_user->id,
+                'message' => 'Unable to find ticket with id ' .$id,
             ], 404);
         }
 
-        $user->delete();
+        if (!($user_id === $ticket->user_id)) {
+
+            return new Response([
+                'message' => 'Must be the owner of the ticket ' .$id,
+            ], 401);
+
+        }
+
+        $ticket->delete();
 
         return new Response([
-            'message' => 'Successfully deleted user ' .$auth_user->id,
+            'message' => 'Successfully deleted ticket ' .$id,
         ], 200);
     }
 }

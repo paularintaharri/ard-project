@@ -28,8 +28,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    public function userTickets(Request $request){
-        return new TicketCollection(Ticket::where('user_id', '=', $request->user()->id)->get());
-    }
 }

@@ -23,6 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::Resource('tickets', 'TicketController')->middleware('auth');
+Route::Resource('/user/tickets', 'UserTicketController')->middleware('auth');
 
-Route::get('/home/mytickets', 'HomeController@userTickets');
+Route::Resource('/user', 'UserController')->middleware('auth');
+
+//Route::get('/home/mytickets', 'HomeController@userTickets');
