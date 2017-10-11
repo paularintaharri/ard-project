@@ -17,13 +17,19 @@ Official documentation [is located here](https://laravel.com/docs/homestead).
 
 ## How To Configure the Project After Checkout
 
-1. In the project's root folder on run `bash init.sh`
+Before you can start the project, you will need to install a few dependencies.
+The project uses laravel/homestead-package that requires Vagrant and VirtualBox to be installed. Instructions for this can be found on [Laravels website] (https://laravel.com/docs/5.5/homestead#first-steps).
+
+Below steps need to be performed from the terminal on your local machine (you can use the terminal window on PHPStorm IDE):
+1. In the project's root folder run `bash init.sh`
 2. Go to Tools -> Vagrant -> Up
-3. Change the folder mapping in Homestead.yaml
+3. Change the ssh-folder and project-folder mappings in Homestead.yaml
 4. Go to Tools -> Vagrant -> Reload
 5. Go to Tools -> Vagrant -> Provision
-6. Go to Tools -> Start SSH session and select Vagrant at /Users/...
-7. Navigate to /home/vagrant/Code/Laravel
+6. Go to Tools -> Start SSH session and select 'Vagrant at /Users/...'
+
+Next steps are all to be perfomed inside the virtual machine:
+7. Navigate to /home/vagrant/Code/Laravel (inside the virtual machine)
 8. Install dependencies by running `composer update` from command line
 9. Create development environment by copying the Laravel example env `cp .env.example .env`
 10. Generate the app key by running `php artisan key:generate`
