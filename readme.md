@@ -29,6 +29,14 @@ Official documentation [is located here](https://laravel.com/docs/homestead).
 10. Generate the app key by running `php artisan key:generate`
 11. Navigate to homestead.app and see that it works!
 
+You will also need to run `php artisan migrate` to build the database.
+
+If you want to seed the database with test data run `php artisan db:seed`.
+
+You also may need to run `php artisan passport:install` to generate the keys for Oauth2.
+
+
+
 ## API Documentation
 The Speeding Ticket API uses Oauth2 for client and user authentication.
 There are three API endpoints through which you can query for speeding tickets, manage your own account,
