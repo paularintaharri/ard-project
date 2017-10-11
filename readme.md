@@ -53,20 +53,20 @@ Call header needs
 - Authorization: Bearer "Personal-Access-Token"
 
 ### Example API calls
-Get all the tickets:
+GET all the tickets:
 - homestead.app/api/tickets
 
-Get ticket with ticket id example:
+GET ticket with ticket id example:
 - homestead.app/api/tickets/3
 
-Get tickets coordinates with ticket id example:
+GET tickets coordinates with ticket id example:
 - homestead.app/api/tickets/coordinates/3
 
-Get all the tickets by city name example:
+GET all the tickets by city name example:
 - homestead.app/api/tickets/city/Helsinki
 
-Get all the tickets by latitude and longitude example:
+GET all the tickets by latitude and longitude example:
 - homestead.app/api/tickets/coord/lat=32lon=78
 
-Get all the tickets by user id example:
+GET all the tickets by user id example:
 - homestead.app/api/tickets/user/11
